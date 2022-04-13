@@ -18,7 +18,6 @@ const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 const id = "HKxoa3D5yxnbIzbe3rY9";
 const ref = db.collection('driverLocation');
 
-
 // Define the background task for location tracking
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {

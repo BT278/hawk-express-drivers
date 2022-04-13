@@ -2,7 +2,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { auth } from "./../../firebase";
-import LocationTracking from "../screens/LocationScreen";
+import { db } from "./../../firebase"; 
+import LocationTracking from "../screens/LocationScreen"; 
 //Files
 import uhclStyle from "../styles/mapStyle";
 
