@@ -1,22 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import LandingPage from "./components/LandingPage";
+import "react-native-gesture-handler";
+import React from "react";
+import { AuthContextProvider } from "./context/AuthContext";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <LandingPage />
+import RootNavigator from "./src/navigation/RootNavigator";
+import { LogBox } from 'react-native';
 
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+LogBox.ignoreLogs(['Async ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#018744",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const App = () => {
+  return <RootNavigator />;
+};
+
+export default App;

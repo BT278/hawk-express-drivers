@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,28 +7,47 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
-  Button,
 } from "react-native";
-import { styleSheet } from "../styles/accountStyle";
 
-export default function Signin() {
+import React, { useState, useContext, useEffect } from "react";
+import { styleSheet } from "../styles/accountStyle";
+import { auth } from "../../firebase";
+import { useLogin } from "../../hooks/useLogin";
+
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate("HomeScreen");
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
   const handleLogin = () => {
-    console.log("Successful login!!!");
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
+        console.log("Logged in with:", user.email);
+      })
+      .catch((error) => alert(error.message));
   };
 
   return (
     <ScrollView contentContainerStyle={styleSheet.container}>
       <Image
-        source={require("../images/hawk-logo.png")}
+        source={require("../images/hawkExpressLogo.png")}
         style={styleSheet.image}
       />
 
       <View style={styleSheet.titleContainer}>
         <Text style={styleSheet.titleStyle}>Hawk Express Tracker</Text>
-        <Text style={styleSheet.subtitleLabel}>Driver Login</Text>
+        <Text style={styleSheet.subtitleLabel}>Account Login</Text>
       </View>
 
       <View style={styleSheet.inputContainer}>
@@ -56,20 +74,18 @@ export default function Signin() {
           <Text style={styleSheet.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        <Text>Password problem?</Text>
-
-        <Button
-          onPress={() =>
-            //this will work when mobile app we will have will have mail application installed
-            Linking.openURL(
-              "mailto:admin@hawkstracker.edu?subject=SendMail@Body=Description"
-            )
-          }
-          title="Email the administrator"
-        >
-          <Text style={{ color: "#0078AE" }}>Email admin</Text>
-        </Button>
+        <Text style={styleSheet.subtitleStyle}>
+          Don't have an account?{" "}
+          <Text
+            style={{ color: "#0078AE" }}
+            onPress={() => navigation.navigate("Signup")}
+          >
+            Sign Up
+          </Text>
+        </Text>
       </View>
     </ScrollView>
   );
-}
+};
+
+export default Login;
