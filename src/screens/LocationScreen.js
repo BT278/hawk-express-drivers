@@ -4,10 +4,20 @@ import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { styleSheet } from "../styles/accountStyle";
 import DropDownPicker from "react-native-dropdown-picker";
-
+import { db } from "../../firebase";
+import { auth } from "../../firebase";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
-let foregroundSubscription = null;
+const id = "HKxoa3D5yxnbIzbe3rY9";
+const ref = db.collection('driverLocation');
+
 
 // Define the background task for location tracking
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
@@ -20,7 +30,12 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     const { locations } = data;
     const location = locations[0];
     if (location) {
-      console.log("Location in background", location.coords);
+      const newFields = {
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude
+      };
+      const updatedDocument = ref.doc(id).update(newFields);      
+      console.log("Location Data: ", newFields);
     }
   }
 });
@@ -38,36 +53,6 @@ export default function LocationTracking({ navigation }) {
     };
     requestPermissions();
   }, []);
-
-  // Start location tracking in foreground
-  const startForegroundUpdate = async () => {
-    // Check if foreground permission is granted
-    const { granted } = await Location.getForegroundPermissionsAsync();
-    if (!granted) {
-      console.log("location tracking denied");
-      return;
-    }
-
-    // Make sure that foreground location tracking is not running
-    foregroundSubscription?.remove();
-
-    // Start watching position in real-time
-    foregroundSubscription = await Location.watchPositionAsync(
-      {
-        // For better logs, we set the accuracy to the most sensitive option
-        accuracy: Location.Accuracy.BestForNavigation,
-      },
-      (location) => {
-        setPosition(location.coords);
-      }
-    );
-  };
-
-  // Stop location tracking in foreground
-  const stopForegroundUpdate = () => {
-    foregroundSubscription?.remove();
-    setPosition(null);
-  };
 
   // Start location tracking in background
   const startBackgroundUpdate = async () => {
@@ -155,37 +140,6 @@ export default function LocationTracking({ navigation }) {
       </TouchableOpacity> 
 
     </View>
-
-    // <View style={styles.container}>
-    //   <Text>Longitude: {position?.longitude}</Text>
-    //   <Text>Latitude: {position?.latitude}</Text>
-    //   <View style={styles.separator} />
-    //   <Button
-    //     onPress={startForegroundUpdate}
-    //     title="Start in foreground"
-    //     color="green"
-    //   />
-    //   <View style={styles.separator} />
-    //   <Button
-    //     onPress={stopForegroundUpdate}
-    //     title="Stop in foreground"
-    //     color="red"
-    //   />
-    //   <View style={styles.separator} />
-    //   <Button
-    //     onPress={startBackgroundUpdate}
-    //     title="Start in background"
-    //     color="green"
-    //   />
-    //   <View style={styles.separator} />
-    //   <Button
-    //     onPress={stopBackgroundUpdate}
-    //     title="Stop in background"
-    //     color="red"
-    //   />
-
-
-    // </View>
   );
 }
 

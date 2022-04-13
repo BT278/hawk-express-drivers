@@ -15,21 +15,17 @@ import { useSignup } from "../../hooks/useSignup";
 const SignUp = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [check, checkPass] = useState("");
   const [name, setName] = useState("");
   const { signup, error, isPending } = useSignup();
 
   const handleSignup = () => {
-    /*
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(navigation.navigate("Login"))
-      // .then(userCredentials => {
-      //   const user = userCredentials.user;
-      //  console.log(user.email);
-      // })
-      .catch((error) => alert(error.message));
-      */
-    signup(email, password, name);
+    if (check == password) {
+        signup(email, password, name);
+        navigation.navigate("HomeScreen");
+    }else {
+        alert("Passwords do not match")
+    }
   };
 
   return (
@@ -73,8 +69,8 @@ const SignUp = ({ navigation }) => {
         <Text style={styleSheet.inputLabel}>Confirm Password</Text>
         <TextInput
           placeholder="********"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
+          value={check}
+          onChangeText={(text) => checkPass(text)}
           style={styleSheet.input}
           secureTextEntry
         />
