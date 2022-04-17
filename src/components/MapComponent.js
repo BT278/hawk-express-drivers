@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { useEffect } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { auth } from "./../../firebase";
@@ -6,7 +7,9 @@ import { db } from "./../../firebase";
 import LocationTracking from "../screens/LocationScreen"; 
 //Files
 import uhclStyle from "../styles/mapStyle";
+import busVector from "../images/hawkExpressLogo.png";
 
+const id = "HKxoa3D5yxnbIzbe3rY9";
 const handleSignout = () => {
   auth
     .signOut()
@@ -21,7 +24,39 @@ var region = {
   longitudeDelta: 0.015,
 };
 
+var busLatitude;
+var busLongitude;
+
 export default function MapComponent() {
+  useEffect(() => {
+    let ref = db.collection("driverLocation");
+    
+    const unsubscribe = ref.onSnapshot(
+      (snapshot) => {
+        var busData = [];
+
+        snapshot.docs.forEach((doc) => {
+          var data = doc.data();
+          var busLocation = data.busLocation;
+          busLatitude = busLocation.latitude;
+          busLongitude = busLocation.longitude;
+          console.log("Current Bus Latitude:", busLatitude);
+          console.log("Current Bus Longitude:", busLongitude);
+        },
+        );
+    },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    // unsubscribe on unmount
+    return () => {
+      unsubscribe();
+    };
+
+  }, []);
+  
   return (
     
     <View style={styles.mapContainer}>
@@ -31,9 +66,19 @@ export default function MapComponent() {
         customMapStyle={uhclStyle} // custom style from mapstyles.js
         initialRegion={region}
         showUserLocation
-      >
-        
-        <Marker 
+      > 
+        <Marker
+        coordinate={{
+          latitude: busLatitude,
+          longitude: busLongitude,
+        }}
+        >
+        <Image
+          source={require("../images/shuttleIcon.png")}
+        />
+      </Marker>
+
+        {/* <Marker 
           coordinate={
             { latitude: 29.578252, 
             longitude: -95.104159 }
@@ -46,7 +91,7 @@ export default function MapComponent() {
             style={styles.markerImage}
             source={require("../images/hawk-logo.png")}
           />
-        </Marker>
+        </Marker> */}
       </MapView>
     </View>
   );

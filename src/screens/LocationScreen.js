@@ -4,8 +4,7 @@ import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import { styleSheet } from "../styles/accountStyle";
 import DropDownPicker from "react-native-dropdown-picker";
-import { db } from "../../firebase";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import {
   collection,
   getDocs,
@@ -30,16 +29,40 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     const location = locations[0];
     if (location) {
       const newFields = {
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude
+        // longitude: location.coords.longitude,
+        // latitude: location.coords.latitude
+        busLocation: location.coords
       };
       const updatedDocument = ref.doc(id).update(newFields);      
-      console.log("Location Data: ", newFields);
+      console.log("Location Data sent");
     }
   }
 });
 
 export default function LocationTracking({ navigation }) {
+  // Retrieve Location Data from Firebase
+  useEffect(() => {
+    let ref = db.collection("driverLocation");
+
+    const unsubscribe = ref.onSnapshot(
+      (snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          // console.log({ ...doc.data() });
+          let data = ({ ...doc.data("latitude") });
+          // var busLong = data["longitude"].toNumber();
+          console.log("latitude: ", data);
+
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    // unsubscribe on unmount
+    return () => unsubscribe();
+  }, []);
+
   // Define position state: {latitude: number, longitude: number}
   const [position, setPosition] = useState(null);
 
