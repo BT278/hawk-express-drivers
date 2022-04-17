@@ -38,22 +38,6 @@ export default HawkExpressTracker = ({ navigation }) => {
           color="#0078AE"
           icon={open ? 'bus' : 'plus'}
           actions={[
-            // {
-            //   icon: 'account',
-            //   label: 'Profile',
-            //   color: "#0078AE",
-            //   labelTextColor: "#0078AE",
-            //   onPress: () => navigation.navigate("Profile"),
-            //   small: false,
-            // },
-            // {
-            //   icon: 'book',
-            //   label: 'Routes',
-            //   color: "#0078AE",
-            //   labelTextColor: "#0078AE",
-            //   onPress: () => navigation.navigate("Profile"),
-            //   small: false,
-            // },
             {
               icon: 'crosshairs-gps',
               label: 'Track Location',
@@ -74,23 +58,6 @@ export default HawkExpressTracker = ({ navigation }) => {
           onStateChange={onStateChange}
           onPress={() => {open}}
         />
-
-      {/* <FAB
-        style={styles.fab}
-        small
-        color="#0078AE"
-        backgroundColor="white"
-        icon={(props) => <MaterialCommunityIcons name="account" {...props}/>}
-        onPress={() => navigation.navigate("Profile")}
-      />
-
-      <FAB
-        style={styles.fab2}
-        small
-        icon={(props) => <MaterialCommunityIcons name="train-car" {...props}/>}
-        color="#0078AE"
-        onPress={() => navigation.navigate("Destinations")}
-      /> */}
     </Portal>
     </View>
     </Provider>
