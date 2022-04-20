@@ -84,6 +84,8 @@ export default function LocationTracking({ navigation }) {
       console.log("location tracking denied");
       return;
     }
+    alert("Location Tracking Enabled. Drive safely!");
+
 
     // Make sure the task is defined otherwise do not start tracking
     const isTaskDefined = await TaskManager.isTaskDefined(LOCATION_TASK_NAME);
@@ -122,6 +124,7 @@ export default function LocationTracking({ navigation }) {
     if (hasStarted) {
       await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
       console.log("Location tacking stopped");
+      alert("Location Tracking Disabled. Have a great day!");
     }
   };
 
