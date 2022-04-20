@@ -73,8 +73,8 @@ export default function MapComponent() {
         snapshot.docs.forEach((doc) => {
           var data = doc.data();
           var busLocation = data.busLocation;
-          busLatitude = busLocation.latitude;
-          busLongitude = busLocation.longitude;
+          busLatitude = parseFloat(busLocation.latitude);
+          busLongitude = parseFloat(busLocation.longitude);
           console.log("Current Bus Latitude:", busLatitude);
           console.log("Current Bus Longitude:", busLongitude);
           setLong(busLongitude);
@@ -118,34 +118,57 @@ export default function MapComponent() {
         ):
         <Text>{error}</Text>
         }
-        <Marker
+      <Marker
           coordinate={{
             latitude: 29.561950133,
             longitude: -95.115615515,
           }}
         >
-          <Callout>
-            <Text>Christ's Church</Text>
-          </Callout>
           <Image
             style={styles.markerImage}
             source={require("../images/hawk-logo.png")}
           />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Christ's Church</Text>
+                <Image
+                  style={styles.image}
+                  source={require("../images/christs-church.png")}
+                />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
+          </Callout>
         </Marker>
+
+        
         <Marker
           coordinate={{
             latitude: 29.552874933427443,
             longitude: -95.12420096370195,
           }}
         >
-          <Callout>
-            <Text>Bay Area Park and Ride</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Bay Area Park and Ride</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/park-and-ride.png")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
+
 
         <Marker
           coordinate={{
@@ -153,13 +176,23 @@ export default function MapComponent() {
             longitude: -95.11018505215024,
           }}
         >
-          <Callout>
-            <Text>Coastal Flow Measurement Co.</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Coastal Flow Measurement</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/coastal-flow.jpg")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -168,13 +201,23 @@ export default function MapComponent() {
             longitude: -95.10754740123505,
           }}
         >
-          <Callout>
-            <Text>Anytime Fitness</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Anytime Fitness</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/anytime-fitness.png")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -183,24 +226,43 @@ export default function MapComponent() {
             longitude: -95.10630695303462,
           }}
         >
-          <Callout>
-            <Text>University Forest Apartments</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>University Forest Apartments</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/apartments.jpg")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker coordinate={{ latitude: 29.578252, longitude: -95.104159 }}>
-          <Callout>
-            <Image source={require("../images/delta-building.jpg")} />
-            <Text>UHCL Delta Building</Text>
-          </Callout>
           <Image
             style={styles.markerImage}
             source={require("../images/hawk-logo.png")}
           />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Delta Building</Text>
+                <Image
+                  style={styles.image}
+                  source={require("../images/delta-building.jpg")}
+                />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
+          </Callout>
         </Marker>
 
         <Marker
@@ -209,13 +271,23 @@ export default function MapComponent() {
             longitude: -95.1028376873912,
           }}
         >
-          <Callout>
-            <Text>UHCL Art School for Children and Young Adults</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Art School for Children</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/art-school.png")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -224,13 +296,23 @@ export default function MapComponent() {
             longitude: -95.0949528817226,
           }}
         >
-          <Callout>
-            <Text>UHCL Police Department</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>University Police</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/five-o.png")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -239,13 +321,23 @@ export default function MapComponent() {
             longitude: -95.09822634535767,
           }}
         >
-          <Callout>
-            <Text>UHCL Recreation and Wellness Center</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Recreation and Wellness Center</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/rec-center.jpg")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -254,13 +346,23 @@ export default function MapComponent() {
             longitude: -95.09792277159933,
           }}
         >
-          <Callout>
-            <Text>UHCL Hunter Residence Hall</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Hunter Residence Hall</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/hunter-hall.jpg")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
 
         <Marker
@@ -269,16 +371,24 @@ export default function MapComponent() {
             longitude: -95.09768513897552,
           }}
         >
-          <Callout>
-            <View style={styles.calloutCustomization}></View>
-            <Text>UHCL Student Services and Classroom Building</Text>
+        <Image
+              style={styles.markerImage}
+              source={require("../images/hawk-logo.png")}
+              />
+          <Callout tooltip>
+            <View>
+              <View style={styles.bubble}>
+                <Text style={styles.name}>Student Services and Classroom Building</Text>
+                <Image 
+                  style={styles.image}
+                  source={require("../images/student-services.jpg")} 
+                  />
+              </View>
+              <View style={styles.arrowBorder} />
+              <View style={styles.arrow} />
+            </View>
           </Callout>
-          <Image
-            style={styles.markerImage}
-            source={require("../images/hawk-logo.png")}
-          />
         </Marker>
-   
 
         <MapViewDirections
           origin={coordinates[0]}
@@ -347,6 +457,42 @@ const styles = StyleSheet.create({
   mapContainer: {
     backgroundColor: "#0782F9",
     flex: 5,
+  },
+  bubble: {
+    flexDirection: "column",
+    alignSelf: "flex-start",
+    backgroundColor: "#fff",
+    borderRadius: 6,
+    borderColor: "#ccc",
+    borderWidth: 0.5,
+    padding: 15,
+    width: 150,
+  },
+  arrow: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderTopColor: "#fff",
+    borderWidth: 16,
+    alignSelf: "center",
+    marginTop: -32,
+  },
+  arrowBorder: {
+    backgroundColor: "transparent",
+    borderColor: "transparent",
+    borderTopColor: "#007a87",
+    borderWidth: 16,
+    alignSelf: "center",
+    marginTop: -0.5,
+    // marginBottom: -15
+  },
+  image: {
+    width: 120,
+    height: 80,
+  },
+  name: {
+    fontSize: 16,
+    marginBottom: 5,
+    textAlign: "center",
   },
   signOutContainer: {
     flex: 1,
