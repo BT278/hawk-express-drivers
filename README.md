@@ -27,7 +27,7 @@ Upon loading the application, make and account and/or log in. Upon loading, chec
 
 * [Firebase](https://firebase.google.com/) - The web framework used
 * [React Native Maps](https://github.com/react-native-maps/react-native-maps) - Primary Map Component
-* [React Native Dependencies][] All other primary dependencies are within app.json
+* All other primary dependencies are within app.json
 
 ## Authors
 
