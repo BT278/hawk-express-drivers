@@ -1,3 +1,5 @@
+// Not used, but created by Michael
+
 import { Text, View, Image, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { auth } from "../../firebase";
 import {useState} from 'react';
@@ -13,7 +15,6 @@ export default Profile = ({ navigation }) => {
 
   const handleSignout = () => {
     logout();
-    // auth.signOut().catch((error) => alert(error.message));
   };
 
   return (

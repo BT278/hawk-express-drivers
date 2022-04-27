@@ -1,3 +1,5 @@
+// Capability created by Manish
+
 import React, { useEffect, useState } from "react";
 import { Text, View, Button, Image, TextInput, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import * as TaskManager from "expo-task-manager";
@@ -17,20 +19,18 @@ const LOCATION_TASK_NAME = "LOCATION_TASK_NAME";
 const id = "HKxoa3D5yxnbIzbe3rY9";
 const ref = db.collection('driverLocation');
 
-// Define the background task for location tracking
+//  Creates and defines the task associated with background tracking
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
     console.error(error);
     return;
   }
   if (data) {
-    // Extract location coordinates from data
+    // Extract the driver's location coordinates from data
     const { locations } = data;
     const location = locations[0];
     if (location) {
       const newFields = {
-        // longitude: location.coords.longitude,
-        // latitude: location.coords.latitude
         busLocation: location.coords
       };
       const updatedDocument = ref.doc(id).update(newFields);      
@@ -47,11 +47,8 @@ export default function LocationTracking({ navigation }) {
     const unsubscribe = ref.onSnapshot(
       (snapshot) => {
         snapshot.docs.forEach((doc) => {
-          // console.log({ ...doc.data() });
           let data = ({ ...doc.data("latitude") });
-          // var busLong = data["longitude"].toNumber();
           console.log("latitude: ", data);
-
         });
       },
       (error) => {
@@ -63,10 +60,10 @@ export default function LocationTracking({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  // Define position state: {latitude: number, longitude: number}
+  // Define the position state for the bus
   const [position, setPosition] = useState(null);
 
-  // Request permissions right after starting the app
+  // Request permissions from the user
   useEffect(() => {
     const requestPermissions = async () => {
       const foreground = await Location.requestForegroundPermissionsAsync();
@@ -76,9 +73,9 @@ export default function LocationTracking({ navigation }) {
     requestPermissions();
   }, []);
 
-  // Start location tracking in background
+  // Start location tracking, which will be allowed in the background
   const startBackgroundUpdate = async () => {
-    // Don't track position if permission is not granted
+    // If permission is not granted, denied
     const { granted } = await Location.getBackgroundPermissionsAsync();
     if (!granted) {
       console.log("location tracking denied");
@@ -86,15 +83,14 @@ export default function LocationTracking({ navigation }) {
     }
     alert("Location Tracking Enabled. Drive safely!");
 
-
-    // Make sure the task is defined otherwise do not start tracking
+    // Ensure that task is defined, except do not start.
     const isTaskDefined = await TaskManager.isTaskDefined(LOCATION_TASK_NAME);
     if (!isTaskDefined) {
       console.log("Task is not defined");
       return;
     }
 
-    // Don't track if it is already running in background
+    // If already running the task, do not start again.
     const hasStarted = await Location.hasStartedLocationUpdatesAsync(
       LOCATION_TASK_NAME
     );
@@ -104,26 +100,24 @@ export default function LocationTracking({ navigation }) {
     }
 
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      // For better logs, we set the accuracy to the most sensitive option
       accuracy: Location.Accuracy.BestForNavigation,
-      // Make sure to enable this notification if you want to consistently track in the background
       showsBackgroundLocationIndicator: true,
       foregroundService: {
         notificationTitle: "Location",
-        notificationBody: "Location tracking in background",
+        notificationBody: "Location tracking performed in background",
         notificationColor: "#fff",
       },
     });
   };
 
-  // Stop location tracking in background
+  // Task to stop the tracking of location data
   const stopBackgroundUpdate = async () => {
     const hasStarted = await Location.hasStartedLocationUpdatesAsync(
       LOCATION_TASK_NAME
     );
     if (hasStarted) {
       await Location.stopLocationUpdatesAsync(LOCATION_TASK_NAME);
-      console.log("Location tacking stopped");
+      console.log("Location tacking has been stopped");
       alert("Location Tracking Disabled. Have a great day!");
     }
   };

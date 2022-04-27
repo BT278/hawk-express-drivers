@@ -1,3 +1,6 @@
+// Map + Bus Rendering created and managed by Sean Myerly
+// Listening from Firebase created and managed by Sanchit Gnawli 
+
 import {
   StyleSheet,
   Text,

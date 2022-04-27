@@ -1,3 +1,7 @@
+// Manages the rendering of all post-login components. Renders the Functional Action Button (FAB) 
+// overtop the map
+// Core architecture added by Sanchit, FAB added by Sean
+
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import MapComponent from "../components/MapComponent";
@@ -13,7 +17,6 @@ export default HawkExpressTracker = ({ navigation }) => {
 
   const handleSignout = () => {
     logout();
-    // auth.signOut().catch((error) => alert(error.message));
   };
 
 
